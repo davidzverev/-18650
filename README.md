@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Прайс-лист и Контакты</title>
+    <title>Расчет стоимости батарей</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -27,69 +27,70 @@
             width: 100%;
             padding: 20px;
         }
-        .price-list {
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
             width: 100%;
-            border-collapse: collapse;
+            padding: 8px;
+            box-sizing: border-box;
         }
-        .price-list th, .price-list td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
-        .price-list th {
+        .form-group button {
+            padding: 10px 20px;
             background-color: #333;
             color: #fff;
+            border: none;
+            cursor: pointer;
         }
-        .contacts {
+        .result {
             margin-top: 20px;
-        }
-        .contacts p {
-            margin: 5px 0;
+            font-size: 18px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Прайс-лист и Контакты</h1>
+        <h1>Расчет стоимости батарей</h1>
     </header>
     <main>
-        <h2>Прайс-лист</h2>
-        <table class="price-list">
-            <thead>
-                <tr>
-                    <th>Комплектация</th>
-                    <th>Количество</th>
-                    <th>Цена</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1200 мАч</td>
-                    <td>100 шт</td>
-                    <td>5500 р</td>
-                </tr>
-                <tr>
-                    <td>1500 мАч</td>
-                    <td>100 шт</td>
-                    <td>6500 р</td>
-                </tr>
-                <tr>
-                    <td>2000 мАч</td>
-                    <td>100 шт</td>
-                    <td>7500 р</td>
-                </tr>
-                <tr>
-                    <td>2500 мАч</td>
-                    <td>100 шт</td>
-                    <td>11000 р</td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="contacts">
-            <h2>Контакты</h2>
-            <p>Email: <a href="mailto:davidzverev@icloud.com">davidzverev@icloud.com</a></p>
-            <p>WhatsApp: <a href="tel:+79781714402">+7 978 171 4402</a></p>
+        <div class="form-group">
+            <label for="quantity">Количество (шт):</label>
+            <input type="number" id="quantity" min="1" required>
         </div>
+        <div class="form-group">
+            <label for="capacity">Выберите емкость (мАч):</label>
+            <select id="capacity" required>
+                <option value="5500">1200 мАч - 5500 р</option>
+                <option value="6500">1500 мАч - 6500 р</option>
+                <option value="7500">2000 мАч - 7500 р</option>
+                <option value="11000">2500 мАч - 11000 р</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <button type="button" onclick="calculatePrice()">Рассчитать стоимость</button>
+        </div>
+        <div class="result" id="result"></div>
     </main>
+
+    <script>
+        function calculatePrice() {
+            const quantity = document.getElementById('quantity').value;
+            const pricePer100 = document.getElementById('capacity').value;
+
+            if (quantity && pricePer100) {
+                const price = (pricePer100 / 100) * quantity;
+                const totalPrice = price; // Без учета доставки
+
+                document.getElementById('result').innerText = `Общая стоимость: ${totalPrice.toFixed(2)} р`;
+            } else {
+                document.getElementById('result').innerText = 'Пожалуйста, введите количество и выберите емкость.';
+            }
+        }
+    </script>
 </body>
 </html>
